@@ -21,7 +21,7 @@
 
 int init_module(void)
 {
-	printk("Hello World!\n JONEK MODIFIED V0.1\n");
+	printk("Hello World!\n JONEK MODIFIED V0.2 - GIT \n");
 	return 0;
 }
 
