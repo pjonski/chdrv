@@ -88,8 +88,8 @@ int __init chardrv_in(void)
 	my_cdev.owner=THIS_MODULE;
 	cdev_add(&my_cdev, my_dev, 1);
 	
-	chdrv=class_create(THIS_MODULE, FILENAME);
-	device_create(chdrv, NULL, my_dev, NULL, FILENAME);	
+	chdrv_class=class_create(THIS_MODULE, FILENAME);
+	device_create(chdrv_class, NULL, my_dev, NULL, FILENAME);	
 
 	return 0;
 }
