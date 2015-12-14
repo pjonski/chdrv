@@ -33,10 +33,9 @@ static dev_t my_dev;
 struct cdev my_cdev;
 
 static char output[] = "Volenti non fit iniuria.\n";
-static char *input;
+static char input[50];
 ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
-	input=malloc(count);
 	copy_from_user(input, buf, count);
 }
 
