@@ -51,13 +51,13 @@ if (output[*f_pos] == '\0') {
 	int not_copied_bytes;
 
 	if (output[*f_pos] == '\0') {
-        printk(KERN_INFO "End of string, returning zero.\n");
+        printk(KERN_INFO "End of string, returning zero. %d\n",int(*f_pos));
         return 0;
     	}
 	
-	not_copied_bytes= copy_to_user(buf, output[*f_pos], str_len/*-(*f_pos)*/);
-	*f_pos+=str_len;
-	return str_len;
+	not_copied_bytes= copy_to_user(buf, output[*f_pos], 1/*-(*f_pos)*/);
+	*f_pos+=1;
+	return 1;
 	
 }
 
