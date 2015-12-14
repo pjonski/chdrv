@@ -55,7 +55,7 @@ if (output[*f_pos] == '\0') {
         return 0;
     	}
 	copied_bytes = str_len-(*f_pos);
-	copied_bytes = copied_bytes<count ? copied_bytes : count;
+	copied_bytes = (copied_bytes<count) ? copied_bytes : count;
 	copy_to_user(buf, &output[*f_pos], copied_bytes);
 	*f_pos+=copied_bytes;
 	return copied_bytes;
