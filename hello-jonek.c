@@ -55,9 +55,9 @@ if (output[*f_pos] == '\0') {
         return 0;
     	}
 	
-	not_copied_bytes= copy_to_user(buf, output[*f_pos], 1/*-(*f_pos)*/);
-	*f_pos+=1;
-	return 1;
+	not_copied_bytes= copy_to_user(buf, &output[*f_pos], str_len);
+	*f_pos+=str_len;
+	return str_len;
 	
 }
 
