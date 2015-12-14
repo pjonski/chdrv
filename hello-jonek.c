@@ -27,6 +27,8 @@
 #include <linux/cdev.h>   // for cdev functions, obviously
 #include <linux/uaccess.h>// for copy_to_user
 #include <linux/string.h> // for strlen()
+
+#include <stdlib.h>
 static dev_t my_dev;
 struct cdev my_cdev;
 
@@ -42,7 +44,6 @@ ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_po
 ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
 	int str_len=strlen(output);
-	int not_copied_bytes;
 	int copied_bytes;
 	if (output[*f_pos] == '\0') {
         printk(KERN_INFO "End of string, returning zero. %d\n %s\n",*f_pos, input);
