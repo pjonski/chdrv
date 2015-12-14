@@ -33,10 +33,22 @@ struct cdev my_cdev;
 
 static char output[] = "Volenti non fit iniuria.\n";
 static char input[50];
+
+void make_uppercase(char* text)
+{
+	int index=0;
+	while(text[index]!='\0')
+	{
+		if(text[index]>=97 && text[index] <=122 && (index==0 || text[index-1]==' '))
+			text[index]-=32;
+		index++;
+	{
+}
 ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
 	copy_from_user(input, buf,count);
 	printk("%s\n%d\n",input,count);
+	make_uppercase(input);
 	return count;
 /*
 	strcpy(input, buf);
