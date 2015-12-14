@@ -44,7 +44,7 @@ ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos
 		return 0;
 	*f_pos+=not_copied_bytes;
 	return 1;
-*/
+
 }
 
 
