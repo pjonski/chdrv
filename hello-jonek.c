@@ -23,7 +23,7 @@
 
 #include <linux/types.h> // for dev_t
 #include <linux/kdev_t.h>// for format_dev_t
-#include <fs.h>		 // for alloc_chrdev_region()
+#include <linux/fs.h>		 // for alloc_chrdev_region()
 
 static dev_t mydev;
 static char buffer[64];
