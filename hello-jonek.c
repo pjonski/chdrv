@@ -40,9 +40,8 @@ if (output[*f_pos] == '\0') {
         printk(KERN_INFO "End of string, returning zero.\n");
         return 0;
     }
-	printk("%d\n",strlen(output)-1);
-    copy_to_user(buf, &output[*f_pos], strlen(output)-1);
-    *f_pos += strlen(output-1);
+    copy_to_user(buf, &output[*f_pos], 5);
+    *f_pos += 1;
     return 1;  // returned a single character
 
 
