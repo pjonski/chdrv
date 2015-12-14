@@ -30,7 +30,7 @@ struct cdev my_cdev;
 
 static char output[] = "Volenti non fit iniuria.\n";
 
-ssize_t myread(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
+ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
 	if(output[*f_pos] == '\0')
 		return 0; // end of string
@@ -54,7 +54,7 @@ int __init chardrv_in(void)
 	alloc_chrdev_region(&my_dev, 0,1, "chardrv");
 	printk("%s\n",format_dev_t(buffer,my_dev));
 
-	cdev_init(&my_dev,&my_fops);
+	cdev_init(&my_cdev,&my_fops);
 	my_cdev.owner=THIS_MODULE;
 	cdev_add(&my_cdev, my_dev, 1);
 
