@@ -33,6 +33,7 @@ static char output[] = "Volenti non fit iniuria.\n";
 
 ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
+	printk("%zd\n",count);
 	if(output[*f_pos] == '\0')
 		return 0; // end of string
 	copy_to_user(buf, &output[*f_pos], 1);
