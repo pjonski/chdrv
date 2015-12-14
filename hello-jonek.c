@@ -28,12 +28,6 @@
 static dev_t my_dev;
 struct cdev my_cdev;
 
-struct file_operations my_fops = {
-	.owner = THIS_MODULE,
-	.read = my_read,
-};
-static char buffer[64];
-
 static char output[] = "Volenti non fit iniuria.\n";
 
 ssize_t myread(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
@@ -44,6 +38,15 @@ ssize_t myread(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 	*f_pos +=1;
 	return 1;
 }
+
+
+struct file_operations my_fops = {
+	.owner = THIS_MODULE,
+	.read = my_read,
+};
+static char buffer[64];
+
+
 
 int __init chardrv_in(void)
 {
