@@ -28,7 +28,7 @@
 #include <linux/uaccess.h>// for copy_to_user
 #include <linux/string.h> // for strlen()
 
-#include <stdlib.h>
+#include <linux/stdlib.h>
 static dev_t my_dev;
 struct cdev my_cdev;
 
