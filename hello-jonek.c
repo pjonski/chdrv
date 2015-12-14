@@ -35,19 +35,13 @@ static char output[] = "Volenti non fit iniuria.\n";
 ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {	
 	int str_len=strlen(output);
-	printk("%zd %d\n", count, str_len-(*f_pos));
-	printk("%d\n", count-(str_len-(*f_pos)));
-
-	if(str_len-(*f_pos)<(int)count)
-	{
-		copy_to_user(buf,&output[*f_pos], str_len-(*f_pos));
+	int not_copied_bytes;
+	not_copied_bytes=copy_to_user(buf,&output[*f_pos], str_len));
+	if(!not_copied_bytes)
 		return 0;
-	} else
-	{
-		copy_to_user(buf,&output[*f_pos], count);
-		*f_pos +=count;
-		return 1;
-	}
+	*f_pos+=not_copied_bytes;
+	return 1;
+
 }
 
 
