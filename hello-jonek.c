@@ -26,7 +26,7 @@
 #include <linux/fs.h>	 // for alloc_chrdev_region()
 #include <linux/cdev.h>  // cdev functions, obviously
 static dev_t my_dev;
-static cdev my_cdev;
+struct cdev my_cdev;
 
 struct file_operations my_fops = {
 	.owner = THIS_MODULE,
