@@ -31,7 +31,6 @@
 static dev_t my_dev;
 struct cdev my_cdev;
 
-static char output[] = "Volenti non fit iniuria.\n";
 static char input[50];
 
 void make_uppercase(char* text)
@@ -47,23 +46,17 @@ void make_uppercase(char* text)
 ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
 	copy_from_user(input, buf,count);
-	printk("%s\n%d\n",input,count);
 	make_uppercase(input);
 	return count;
-/*
-	strcpy(input, buf);
-	printk("%s\n%d\n",input,count);
-	return count;
-
-*/
 }
 
 ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
+	if(strlen(input)==0)
+		printk("No text stored in driver, use echo to send string.\n");
 	int str_len=strlen(input);
 	int copied_bytes;
 	if (input[*f_pos] == '\0') {
-        printk(KERN_INFO "End of string, returning zero. %d\n",*f_pos);
         return 0;
     	}
 	copied_bytes = str_len-(*f_pos);
