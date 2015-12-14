@@ -21,24 +21,30 @@
 #include <linux/init.h>
 #include <linux/kernel.h>
 
-#include <linux/types.h> // for dev_t
-#include <linux/kdev_t.h>// for format_dev_t
-#include <linux/fs.h>	 // for alloc_chrdev_region()
-#include <linux/cdev.h>  // cdev functions, obviously
-#include <linux/uaccess.h>//copy_to_user
+#include <linux/types.h>  // for dev_t
+#include <linux/kdev_t.h> // for format_dev_t
+#include <linux/fs.h>	  // for alloc_chrdev_region()
+#include <linux/cdev.h>   // for cdev functions, obviously
+#include <linux/uaccess.h>// for copy_to_user
+#include <linux/string.h> // for strlen()
 static dev_t my_dev;
 struct cdev my_cdev;
 
 static char output[] = "Volenti non fit iniuria.\n";
 
 ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
-{
-	printk("%zd\n",count);
-	if(output[*f_pos] == '\0')
-		return 0; // end of string
-	copy_to_user(buf, &output[*f_pos], 1);
-	*f_pos +=1;
-	return 2;
+{	
+	int str_len=strlen(output);
+	if(strlen(output)-(*f_pos)<count)
+	{
+		copy_to_user(buf,&output[*f_pos], str_len);
+		return 0;
+	} else
+	{
+		copy_to_user(buf,output[*f_pos], count);
+		*f_pos +=1;
+		return 1;
+	}
 }
 
 
