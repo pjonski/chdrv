@@ -42,7 +42,7 @@ void make_uppercase(char* text)
 		if(text[index]>=97 && text[index] <=122 && (index==0 || text[index-1]==' '))
 			text[index]-=32;
 		index++;
-	{
+	}
 }
 ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
