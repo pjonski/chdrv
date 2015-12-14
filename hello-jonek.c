@@ -37,7 +37,7 @@ ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_po
 {
 	strcpy(input, buf);
 	printk("%s\n%d\n",input,count);
-	return 0;
+	return count;
 }
 
 
