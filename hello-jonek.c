@@ -25,6 +25,7 @@
 #include <linux/kdev_t.h>// for format_dev_t
 #include <linux/fs.h>	 // for alloc_chrdev_region()
 #include <linux/cdev.h>  // cdev functions, obviously
+#include <linux/uaccess.h>//copy_to_user
 static dev_t my_dev;
 struct cdev my_cdev;
 
