@@ -42,7 +42,7 @@ if (output[*f_pos] == '\0') {
     }
     copy_to_user(buf, &output[*f_pos], 5);
     *f_pos += 1;
-    return 1;  // returned a single character
+    return 5;  // returned a single character
 
 
 
