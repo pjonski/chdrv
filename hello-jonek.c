@@ -50,7 +50,7 @@ if (output[*f_pos] == '\0') {
 	int str_len=strlen(output);
 	int not_copied_bytes;
 	printk("%d %d\n",str_len, *f_pos);
-	not_copied_bytes= copy_to_user(buf, output[*f_pos], str_len);
+	not_copied_bytes= copy_to_user(buf, output[]+(*f_pos), str_len);
 
 	printk("%d\n",not_copied_bytes);
 	if(!not_copied_bytes)
