@@ -51,7 +51,7 @@ if (output[*f_pos] == '\0') {
 	int not_copied_bytes;
 
 	if (output[*f_pos] == '\0') {
-        printk(KERN_INFO "End of string, returning zero. %d\n",int(*f_pos));
+        printk(KERN_INFO "End of string, returning zero. %d\n",*f_pos);
         return 0;
     	}
 	
