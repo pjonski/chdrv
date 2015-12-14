@@ -36,7 +36,9 @@ ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos
 {	
 	int str_len=strlen(output);
 	int not_copied_bytes;
+	printk("%d %d\n",str_len, *f_pos);
 	not_copied_bytes=copy_to_user(buf,&output[*f_pos], str_len);
+	printk("%d\n",not_copied_bytes);
 	if(!not_copied_bytes)
 		return 0;
 	*f_pos+=not_copied_bytes;
