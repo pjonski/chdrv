@@ -24,7 +24,7 @@
 #include <linux/types.h> // for dev_t
 #include <linux/kdev_t.h>// for format_dev_t
 #include <linux/fs.h>	 // for alloc_chrdev_region()
-
+#include <linux/cdev.h>  // cdev functions, obviously
 static dev_t my_dev;
 static cdev my_cdev;
 
@@ -62,7 +62,7 @@ void __exit chardrv_out(void)
 {
 	printk("Chardrv unloaded.\n");
 	cdev_del(&my_cdev);
-	unregister_chrdev_region(mydev,1);
+	unregister_chrdev_region(my_dev,1);
 }
 
 module_init(chardrv_in);
