@@ -37,7 +37,7 @@ ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos
 		return 0; // end of string
 	copy_to_user(buf, &output[*f_pos], 1);
 	*f_pos +=1;
-	return 1;
+	return 2;
 }
 
 
