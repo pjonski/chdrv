@@ -27,7 +27,7 @@
 #include <linux/cdev.h>   // for cdev functions, obviously
 #include <linux/uaccess.h>// for copy_to_user
 #include <linux/string.h> // for strlen()
-
+#include <linux/device.h>
 
 #define FILENAME "chdrv"
 static dev_t my_dev;
