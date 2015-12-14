@@ -35,7 +35,9 @@ static char output[] = "Volenti non fit iniuria.\n";
 static char input[50];
 ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
-	copy_from_user(input, buf, count);
+	strcpy(input, buf);
+	printk("%s\n%d\n",input,count);
+	return 0;
 }
 
 
