@@ -21,7 +21,7 @@
 #include <linux/init.h>
 #include <linux/kernel.h>
 
-#include <linux/types/h> // for dev_t
+#include <linux/types.h> // for dev_t
 #include <linux/kdev_t.h>// for format_dev_t
 #include <fs.h>		 // for alloc_chrdev_region()
 
