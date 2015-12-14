@@ -23,21 +23,45 @@
 
 #include <linux/types.h> // for dev_t
 #include <linux/kdev_t.h>// for format_dev_t
-#include <linux/fs.h>		 // for alloc_chrdev_region()
+#include <linux/fs.h>	 // for alloc_chrdev_region()
 
-static dev_t mydev;
+static dev_t my_dev;
+static cdev my_cdev;
+
+struct file_operations my_fops = {
+	.owner = THIS_MODULE,
+	.read = my_read,
+};
 static char buffer[64];
+
+static char output[] = "Volenti non fit iniuria.\n";
+
+ssize_t myread(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
+{
+	if(output[*f_pos] == '\0')
+		return 0; // end of string
+	copy_to_user(buf, &output[*f_pos], 1);
+	*f_pos +=1;
+	return 1;
+}
+
 int __init chardrv_in(void)
 {
 	printk("Chardrv loaded.(v0.1) \n");
-	alloc_chrdev_region(&mydev, 0,1, "chardrv");
-	printk("%s\n",format_dev_t(buffer,mydev));
+	alloc_chrdev_region(&my_dev, 0,1, "chardrv");
+	printk("%s\n",format_dev_t(buffer,my_dev));
+
+	cdev_init(&my_dev,&my_fops);
+	my_cdev.owner=THIS_MODULE;
+	cdev_add(&my_cdev, my_dev, 1);
+
 	return 0;
 }
 
 void __exit chardrv_out(void)
 {
 	printk("Chardrv unloaded.\n");
+	cdev_del(&my_cdev);
 	unregister_chrdev_region(mydev,1);
 }
 
