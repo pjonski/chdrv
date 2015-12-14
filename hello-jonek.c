@@ -49,15 +49,15 @@ if (output[*f_pos] == '\0') {
 
 	int str_len=strlen(output);
 	int not_copied_bytes;
-
+	int copied_bytes;
 	if (output[*f_pos] == '\0') {
         printk(KERN_INFO "End of string, returning zero. %d\n",*f_pos);
         return 0;
     	}
-	
-	not_copied_bytes= copy_to_user(buf, &output[*f_pos], str_len-(*f_pos));
-	*f_pos=str_len-not_copied_bytes;
-	return str_len-(*f_pos);
+	copied_bytes=str_len-(*f_pos);
+	copy_to_user(buf, &output[*f_pos], copied_bytes);
+	*f_pos+=copied_bytes;
+	return copied_bytes;
 	
 }
 
