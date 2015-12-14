@@ -18,16 +18,30 @@
  *****************************************************************************/
 
 #include <linux/module.h>
+#include <linux/init.h>
+#include <linux/kernel.h>
 
-int init_module(void)
+#include <linux/types/h> // for dev_t
+#include <linux/kdev_t.h>// for format_dev_t
+#include <fs.h>		 // for alloc_chrdev_region()
+
+static dev_t mydev;
+static char buffer[64];
+int __init chardrv_in(void)
 {
-	printk("Hello World!\n JONEK MODIFIED V0.2 - GIT \n");
+	printk("Chardrv loaded.(v0.1) \n");
+	alloc_chrdev_region(&mydev, 0,1, "chardrv")
+	printk("%s\n",format_dev_t(buffer,mydev));
 	return 0;
 }
 
-void cleanup_module(void)
+void __exit chardrv_out(void)
 {
-	printk("Goodbye Cruel World!\n");
+	printk("Chardrv unloaded.\n");
+	unregister_chrdev_region(mydev,1);
 }
+
+module_init(chardrv_in);
+module_exit(chardrv_out);
 
 MODULE_LICENSE("GPL");
