@@ -31,27 +31,21 @@ static dev_t my_dev;
 struct cdev my_cdev;
 
 static char output[] = "Volenti non fit iniuria.\n";
+static char *input;
+ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
+{
+	input=malloc(count);
+	copy_from_user(input, buf, count);
+}
+
 
 ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
-
-/*
-if (output[*f_pos] == '\0') {
-        printk(KERN_INFO "End of string, returning zero.\n");
-        return 0;
-    }
-    copy_to_user(buf, &output[*f_pos], 5);
-    *f_pos += 1;
-    return 5;  // returned a single character
-*/
-
-
-
 	int str_len=strlen(output);
 	int not_copied_bytes;
 	int copied_bytes;
 	if (output[*f_pos] == '\0') {
-        printk(KERN_INFO "End of string, returning zero. %d\n",*f_pos);
+        printk(KERN_INFO "End of string, returning zero. %d\n %s\n",*f_pos, input);
         return 0;
     	}
 	copied_bytes = str_len-(*f_pos);
@@ -59,13 +53,13 @@ if (output[*f_pos] == '\0') {
 	copy_to_user(buf, &output[*f_pos], copied_bytes);
 	*f_pos+=copied_bytes;
 	return copied_bytes;
-	
 }
 
 
 struct file_operations my_fops = {
 	.owner = THIS_MODULE,
 	.read = my_read,
+	.write = my_write,
 };
 static char buffer[64];
 
