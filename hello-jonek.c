@@ -28,9 +28,11 @@
 #include <linux/uaccess.h>// for copy_to_user
 #include <linux/string.h> // for strlen()
 
-static dev_t my_dev;
-struct cdev my_cdev;
 
+#define FILENAME "chdrv"
+static dev_t my_dev;
+static struct cdev my_cdev;
+static struct class *chdrv_class=NULL;
 static char input[50];
 
 void make_uppercase(char* text)
@@ -85,6 +87,9 @@ int __init chardrv_in(void)
 	cdev_init(&my_cdev,&my_fops);
 	my_cdev.owner=THIS_MODULE;
 	cdev_add(&my_cdev, my_dev, 1);
+	
+	chdrv=class_create(THIS_MODULE, FILENAME);
+	device_create(chdrv, NULL, my_dev, NULL, FILENAME);	
 
 	return 0;
 }
