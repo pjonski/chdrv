@@ -30,7 +30,7 @@ static char buffer[64];
 int __init chardrv_in(void)
 {
 	printk("Chardrv loaded.(v0.1) \n");
-	alloc_chrdev_region(&mydev, 0,1, "chardrv")
+	alloc_chrdev_region(&mydev, 0,1, "chardrv");
 	printk("%s\n",format_dev_t(buffer,mydev));
 	return 0;
 }
