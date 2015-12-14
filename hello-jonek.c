@@ -48,15 +48,15 @@ ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_po
 
 ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
-	int str_len=strlen(output);
+	int str_len=strlen(input);
 	int copied_bytes;
-	if (output[*f_pos] == '\0') {
-        printk(KERN_INFO "End of string, returning zero. %d\n %s\n",*f_pos, input);
+	if (input[*f_pos] == '\0') {
+        printk(KERN_INFO "End of string, returning zero. %d\n",*f_pos);
         return 0;
     	}
 	copied_bytes = str_len-(*f_pos);
 	copied_bytes = (copied_bytes<count) ? copied_bytes : count;
-	copy_to_user(buf, &output[*f_pos], copied_bytes);
+	copy_to_user(buf, &input[*f_pos], copied_bytes);
 	*f_pos+=copied_bytes;
 	return copied_bytes;
 }
