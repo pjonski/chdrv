@@ -55,7 +55,7 @@ ssize_t my_write(struct file *filp, char __user *buf, size_t count, loff_t *f_po
 ssize_t my_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
 	if(strlen(input)==0)
-		printk("No text stored in driver, use echo to send string.\n");
+		printk("No text stored in driver, use echo to send string.<V1.1>>\n");
 	int str_len=strlen(input);
 	int copied_bytes;
 	if (input[*f_pos] == '\0') {
